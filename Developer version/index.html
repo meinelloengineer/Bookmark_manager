@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="styles.css"> <!-- Reference to the external CSS -->
+        <title></title> <!-- xxx HomeParentPageTitle xxx -->
+    </head>    
+<body>
+
+<div class="header-container">
+    <h1></h1> <!-- xxx Pagetitle xxx -->
+    <input type="hidden" id="parentPageID" value="0"> <!-- Default parentPageID is 0 for top-level -->
+    <nav id="breadcrumb">
+        <!-- Breadcrumb items will be dynamically injected here -->
+    </nav>
+    <button id="settingsButton" onclick="showSettingsPopup()">Settings</button>
+</div>
+    
+<!-- Settings Popup -->
+<div class="popup-overlay" id="settingsOverlay" onclick="hideSettingsPopup()"></div>
+<div class="popup-form" id="settingsForm">
+    <h2>Settings</h2>
+    
+    <label for="mainTitle">Main Title:</label>
+    <input type="text" id="mainTitle" placeholder="Enter new title" value="My Bookmarks">
+
+    <label for="backgroundImageUpload">Homepage Background Image:</label>
+    <input type="file" id="backgroundImageUpload" accept="image/*">
+
+    <!-- Export and Import Buttons -->
+    <label>Database Management:</label><br>
+    <button onclick="exportDatabase()">Export Database</button>
+    <input type="file" id="importDatabaseFile" accept=".json" style="display: none;" onchange="importDatabase(event)">
+    <button onclick="document.getElementById('importDatabaseFile').click()">Import Database</button><br>
+    <button onclick="deleteDatabase()">Delete Database</button>
+
+    <hr>
+    <button onclick="saveSettings()">Save</button>
+    <button onclick="hideSettingsPopup()">Cancel</button>
+</div>
+
+
+<!-- Container List -->
+<div id="containers-list"></div>
+
+<!-- Button Container -->
+<div class="new-buttons-container">
+    <!-- New Container Button -->
+    <div class="new-container-box" onclick="addContainer()">+</div>
+</div>
+
+
+<!-- (Link) Popup Form -->
+<div class="popup-overlay" id="popupOverlay" onclick="hidePopup()"></div>
+<div class="popup-form" id="popupForm">
+    <h2 id="popupTitle">Add a New Link</h2>
+    <label for="linkName">Name*</label>
+    <input type="text" id="linkName" placeholder="Enter Name">
+    
+    <label for="linkURL">URL*</label>
+    <input type="text" id="linkURL" placeholder="Enter URL">
+    
+    <label for="linkColor">Choose a color:</label>
+    <input type="color" id="linkColor" value="#65a9d7"> <!-- Default color -->
+
+    <label for="linkComment">Comment</label>
+    <input type="text" id="linkComment" placeholder="Enter an optional comment">
+    
+    <button id="popupButton" onclick="saveLink()">Add Link</button>
+    <button onclick="hidePopup()">Cancel</button>
+</div>
+
+<!--Page Popup Form -->
+<div class="popup-overlay" id="pagePopupOverlay" onclick="hidePagePopup()"></div>
+<div class="popup-form" id="pagePopupForm">
+    <h2 id="pagePopupTitle">Add a New Page</h2>
+    <label for="pageName">Name*</label>
+    <input type="text" id="pageName" placeholder="Enter Name">
+    
+    <label for="pageColor">Choose a color:</label>
+    <input type="color" id="pageColor" value="#808000"> <!-- Default color -->
+
+    <label for="pageComment">Comment</label>
+    <input type="text" id="pageComment" placeholder="Enter an optional comment">
+
+    <label for="pageBackgroundImageUpload">Background Image:</label>
+    <input type="file" id="pageBackgroundImageUpload" accept="image/*">
+    
+    <button id="pagePopupButton" onclick="savePage()">Add Page</button>
+    <button onclick="hidePagePopup()">Cancel</button>
+</div>
+
+<!-- Container Popup Form -->
+<div class="popup-overlay" id="containerPopupOverlay" onclick="hideContainerPopup()"></div>
+<div class="popup-form" id="containerPopupForm">
+    <h2 id="containerPopupTitle">Add a New Container</h2>
+    
+    <!-- Name Field -->
+    <label for="containerName">Name</label>
+    <input type="text" id="containerName" placeholder="Enter Container Name">
+    
+    <!-- Color Picker -->
+    <label for="containerColor">Choose a color:</label>
+    <input type="color" id="containerColor" value="#4285f4"> <!-- Default color -->
+    
+    <!-- Container Type -->
+    <label>Container Type:</label>
+    <div id="containerType">
+        <label>
+            <input id="radioLinks" type="radio" name="containerType" value="links" checked> Links
+        </label>
+        <label>
+            <input id="radioPages" type="radio" name="containerType" value="pages"> Pages
+        </label>
+    </div>
+    
+    <!-- Checkboxes for Move/Copy -->
+    <div id="containerOptions" style="display: none;">
+        <div class="checkbox-container">
+            <label for="moveContainer">
+                <input id="moveContainer" type="checkbox"> Move this Container
+            </label>
+        </div>
+
+        <!-- Dropdown for Parent Page Selection -->
+        <label for="parentPageDropdown">Select New Parent Page:</label>
+        <select id="parentPageDropdown">
+            <option value="" disabled selected>Select a page</option>
+        </select>
+    </div>
+
+    
+    <!-- Save Button -->
+    <button id="containerPopupButton" onclick="updateContainer()">Save</button>
+    <button onclick="hideContainerPopup()">Cancel</button>
+</div>
+
+
+
+<script src="database.js"></script>
+<script src="main.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

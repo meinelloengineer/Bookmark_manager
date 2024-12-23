@@ -1,0 +1,302 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center h1 horizontally */
+    position: relative; /* Needed for absolute positioning of the button */
+    width: 100%;
+}
+
+.header-container h1 {
+    margin: 0; /* Remove default margin */
+    text-align: center; /* Ensure the title text stays centered */
+    flex-grow: 1; /* Allow h1 to take up available space for centering */
+}
+
+#settingsButton {
+    position: absolute;
+    right: 20px; /* Padding from the right edge */
+    padding: 10px;
+    background-color: #0c1c35;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#settingsButton:hover {
+    background-color: #3367d6;
+}
+
+#breadcrumb {
+    position: absolute;
+    left: 20px; /* Padding from the right edge */
+    padding: 10px;
+    background-color: #0c1c35;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Parent container for the "New" buttons on the bottom */
+.new-buttons-container {
+    display: flex;
+    justify-content: flex-start; /* Align buttons to the left */
+    gap: 30px; /* Space between the buttons */
+    margin: 10px 0; /* Optional spacing around the container */
+}
+
+/* Styles for the buttons */
+.new-container-box, .new-page-box {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 1;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+/* Style for the container type radio buttons */
+#containerType {
+    margin: 10px 0;
+}
+
+#containerType label {
+    display: inline-flex;
+    margin-right: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+
+.new-container-box:hover, .new-page-box:hover {
+    background-color: #d0d0d0;
+}
+
+
+/* Parent container to organize containers into rows */
+#containers-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Max 5 containers per row */
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    max-height: 300px; /* Adjust the height as needed */
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.container-title {
+    font-size: 1.5em;
+    color: #2c3e50;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    border-radius: 5px;
+}
+
+.subtopic {
+    background-color: #4285f4;
+    color: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    width: 100%;
+    text-align: left;
+}
+
+.subsubtopic {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #65a9d7;
+    color: #fff;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.subsubtopic a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.subsubtopic a:hover {
+    color: #e0e0e0;
+}
+
+.subsubtopic button {
+    background-color: #ffffff00;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.subsubtopic button:hover {
+    background-color: #ddd;
+}
+
+.new-entry-box{
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 1;
+    text-align: center;
+}
+
+.popup-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.popup-form input {
+    margin: 5px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.popup-form button {
+    padding: 8px 16px;
+    margin-top: 10px;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+
+.pageContainer {
+    padding: 20px;
+    box-shadow:
+        inset 0 -0.3em 1em rgba(5, 55, 5, 0.4), 
+        0 0 0 1px rgb(0, 0, 0), 
+        0.3em 1em 1em rgba(0, 0, 0, 0.6);
+    text-shadow: -1px 1px 0 #000,
+        1px 1px 0 #000,
+        1px -1px 0 #000,
+        -1px -1px 0 #000;
+  }
+  
+  .bookmarkContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #65a9d7;
+    color: #fff;
+    margin: 5px 0;
+    border-radius: 5px;
+    border-style: groove;
+    border-width: medium;
+    border-color: black;
+}
+
+.bookmarkContainer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.bookmarkContainer a:hover {
+    color: #e0e0e0;
+}
+
+.bookmarkContainer button {
+    background-color: #ffffff00;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bookmarkContainer button:hover {
+    background-color: #ddd;
+}
+
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add space between the checkbox and the label */
+    margin-bottom: 10px; /* Space between checkboxes */
+}
+
+#containerOptions {
+    margin-top: 15px;
+}
+
+label {
+    font-size: 14px; /* Adjust as needed for better visual alignment */
+    cursor: pointer; /* Makes the label clickable */
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px; /* Ensure proper spacing */
+    vertical-align: middle; /* Align with the text */
+}

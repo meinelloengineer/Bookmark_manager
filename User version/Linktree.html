@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="styles.css"> <!-- Reference to the external CSS -->
+        <title></title> <!-- xxx HomeParentPageTitle xxx -->
+        <style>
+            html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center h1 horizontally */
+    position: relative; /* Needed for absolute positioning of the button */
+    width: 100%;
+}
+
+.header-container h1 {
+    margin: 0; /* Remove default margin */
+    text-align: center; /* Ensure the title text stays centered */
+    flex-grow: 1; /* Allow h1 to take up available space for centering */
+}
+
+#settingsButton {
+    position: absolute;
+    right: 20px; /* Padding from the right edge */
+    padding: 10px;
+    background-color: #0c1c35;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#settingsButton:hover {
+    background-color: #3367d6;
+}
+
+#breadcrumb {
+    position: absolute;
+    left: 20px; /* Padding from the right edge */
+    padding: 10px;
+    background-color: #0c1c35;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Parent container for the "New" buttons on the bottom */
+.new-buttons-container {
+    display: flex;
+    justify-content: flex-start; /* Align buttons to the left */
+    gap: 30px; /* Space between the buttons */
+    margin: 10px 0; /* Optional spacing around the container */
+}
+
+/* Styles for the buttons */
+.new-container-box, .new-page-box {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 1;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+/* Style for the container type radio buttons */
+#containerType {
+    margin: 10px 0;
+}
+
+#containerType label {
+    display: inline-flex;
+    margin-right: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+
+.new-container-box:hover, .new-page-box:hover {
+    background-color: #d0d0d0;
+}
+
+
+/* Parent container to organize containers into rows */
+#containers-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Max 5 containers per row */
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    max-height: 300px; /* Adjust the height as needed */
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.container-title {
+    font-size: 1.5em;
+    color: #2c3e50;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    border-radius: 5px;
+}
+
+.subtopic {
+    background-color: #4285f4;
+    color: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    width: 100%;
+    text-align: left;
+}
+
+.subsubtopic {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #65a9d7;
+    color: #fff;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.subsubtopic a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.subsubtopic a:hover {
+    color: #e0e0e0;
+}
+
+.subsubtopic button {
+    background-color: #ffffff00;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.subsubtopic button:hover {
+    background-color: #ddd;
+}
+
+.new-entry-box{
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 1;
+    text-align: center;
+}
+
+.popup-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.popup-form input {
+    margin: 5px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.popup-form button {
+    padding: 8px 16px;
+    margin-top: 10px;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+
+.pageContainer {
+    padding: 20px;
+    box-shadow:
+        inset 0 -0.3em 1em rgba(5, 55, 5, 0.4), 
+        0 0 0 1px rgb(0, 0, 0), 
+        0.3em 1em 1em rgba(0, 0, 0, 0.6);
+    text-shadow: -1px 1px 0 #000,
+        1px 1px 0 #000,
+        1px -1px 0 #000,
+        -1px -1px 0 #000;
+  }
+  
+  .bookmarkContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #65a9d7;
+    color: #fff;
+    margin: 5px 0;
+    border-radius: 5px;
+    border-style: groove;
+    border-width: medium;
+    border-color: black;
+}
+
+.bookmarkContainer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.bookmarkContainer a:hover {
+    color: #e0e0e0;
+}
+
+.bookmarkContainer button {
+    background-color: #ffffff00;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bookmarkContainer button:hover {
+    background-color: #ddd;
+}
+
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add space between the checkbox and the label */
+    margin-bottom: 10px; /* Space between checkboxes */
+}
+
+#containerOptions {
+    margin-top: 15px;
+}
+
+label {
+    font-size: 14px; /* Adjust as needed for better visual alignment */
+    cursor: pointer; /* Makes the label clickable */
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px; /* Ensure proper spacing */
+    vertical-align: middle; /* Align with the text */
+}
+
+        </style>
+    </head>    
+<body>
+
+<div class="header-container">
+    <h1></h1> <!-- xxx Pagetitle xxx -->
+    <input type="hidden" id="parentPageID" value="0"> <!-- Default parentPageID is 0 for top-level -->
+    <nav id="breadcrumb">
+        <!-- Breadcrumb items will be dynamically injected here -->
+    </nav>
+    <button id="settingsButton" onclick="showSettingsPopup()">Settings</button>
+</div>
+    
+<!-- Settings Popup -->
+<div class="popup-overlay" id="settingsOverlay" onclick="hideSettingsPopup()"></div>
+<div class="popup-form" id="settingsForm">
+    <h2>Settings</h2>
+    
+    <label for="mainTitle">Main Title:</label>
+    <input type="text" id="mainTitle" placeholder="Enter new title" value="My Bookmarks">
+
+    <label for="backgroundImageUpload">Homepage Background Image:</label>
+    <input type="file" id="backgroundImageUpload" accept="image/*">
+
+    <!-- Export and Import Buttons -->
+    <label>Database Management:</label><br>
+    <button onclick="exportDatabase()">Export Database</button>
+    <input type="file" id="importDatabaseFile" accept=".json" style="display: none;" onchange="importDatabase(event)">
+    <button onclick="document.getElementById('importDatabaseFile').click()">Import Database</button><br>
+    <button onclick="deleteDatabase()">Delete Database</button>
+
+    <hr>
+    <button onclick="saveSettings()">Save</button>
+    <button onclick="hideSettingsPopup()">Cancel</button>
+</div>
+
+
+<!-- Container List -->
+<div id="containers-list"></div>
+
+<!-- Button Container -->
+<div class="new-buttons-container">
+    <!-- New Container Button -->
+    <div class="new-container-box" onclick="addContainer()">+</div>
+</div>
+
+
+<!-- (Link) Popup Form -->
+<div class="popup-overlay" id="popupOverlay" onclick="hidePopup()"></div>
+<div class="popup-form" id="popupForm">
+    <h2 id="popupTitle">Add a New Link</h2>
+    <label for="linkName">Name*</label>
+    <input type="text" id="linkName" placeholder="Enter Name">
+    
+    <label for="linkURL">URL*</label>
+    <input type="text" id="linkURL" placeholder="Enter URL">
+    
+    <label for="linkColor">Choose a color:</label>
+    <input type="color" id="linkColor" value="#65a9d7"> <!-- Default color -->
+
+    <label for="linkComment">Comment</label>
+    <input type="text" id="linkComment" placeholder="Enter an optional comment">
+    
+    <button id="popupButton" onclick="saveLink()">Add Link</button>
+    <button onclick="hidePopup()">Cancel</button>
+</div>
+
+<!--Page Popup Form -->
+<div class="popup-overlay" id="pagePopupOverlay" onclick="hidePagePopup()"></div>
+<div class="popup-form" id="pagePopupForm">
+    <h2 id="pagePopupTitle">Add a New Page</h2>
+    <label for="pageName">Name*</label>
+    <input type="text" id="pageName" placeholder="Enter Name">
+    
+    <label for="pageColor">Choose a color:</label>
+    <input type="color" id="pageColor" value="#808000"> <!-- Default color -->
+
+    <label for="pageComment">Comment</label>
+    <input type="text" id="pageComment" placeholder="Enter an optional comment">
+
+    <label for="pageBackgroundImageUpload">Background Image:</label>
+    <input type="file" id="pageBackgroundImageUpload" accept="image/*">
+    
+    <button id="pagePopupButton" onclick="savePage()">Add Page</button>
+    <button onclick="hidePagePopup()">Cancel</button>
+</div>
+
+<!-- Container Popup Form -->
+<div class="popup-overlay" id="containerPopupOverlay" onclick="hideContainerPopup()"></div>
+<div class="popup-form" id="containerPopupForm">
+    <h2 id="containerPopupTitle">Add a New Container</h2>
+    
+    <!-- Name Field -->
+    <label for="containerName">Name</label>
+    <input type="text" id="containerName" placeholder="Enter Container Name">
+    
+    <!-- Color Picker -->
+    <label for="containerColor">Choose a color:</label>
+    <input type="color" id="containerColor" value="#4285f4"> <!-- Default color -->
+    
+    <!-- Container Type -->
+    <label>Container Type:</label>
+    <div id="containerType">
+        <label>
+            <input id="radioLinks" type="radio" name="containerType" value="links" checked> Links
+        </label>
+        <label>
+            <input id="radioPages" type="radio" name="containerType" value="pages"> Pages
+        </label>
+    </div>
+    
+    <!-- Checkboxes for Move/Copy -->
+    <div id="containerOptions" style="display: none;">
+        <div class="checkbox-container">
+            <label for="moveContainer">
+                <input id="moveContainer" type="checkbox"> Move this Container
+            </label>
+        </div>
+
+        <!-- Dropdown for Parent Page Selection -->
+        <label for="parentPageDropdown">Select New Parent Page:</label>
+        <select id="parentPageDropdown">
+            <option value="" disabled selected>Select a page</option>
+        </select>
+    </div>
+
+    
+    <!-- Save Button -->
+    <button id="containerPopupButton" onclick="updateContainer()">Save</button>
+    <button onclick="hideContainerPopup()">Cancel</button>
+</div>
+
+
+
+<script>
+    let db;
+
+async function initDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open("BookmarksDB", 2); // Increment to trigger onupgradeneeded()
+
+        request.onupgradeneeded = async (event) => {
+            db = event.target.result;
+
+            // Create the "bookmarks" object store
+            if (!db.objectStoreNames.contains("bookmarks")) {
+                const bookmarksStore = db.createObjectStore("bookmarks", { keyPath: "id", autoIncrement: true });
+                bookmarksStore.createIndex("name", "name", { unique: false });
+                bookmarksStore.createIndex("url", "url", { unique: false });
+                bookmarksStore.createIndex("color", "color", { unique: false });
+                bookmarksStore.createIndex("comment", "comment", { unique: false });
+                bookmarksStore.createIndex("order", "order", { unique: false });
+                bookmarksStore.createIndex("containerId", "containerId", { unique: false });
+            }
+            // Create the "pages" object store
+            if (!db.objectStoreNames.contains("pages")) {
+                const pagesStore = db.createObjectStore("pages", { keyPath: "id", autoIncrement: true });
+                pagesStore.createIndex("name", "name", { unique: false });
+                pagesStore.createIndex("color", "color", { unique: false });
+                pagesStore.createIndex("comment", "comment", { unique: false });
+                pagesStore.createIndex("order", "order", { unique: false });
+                pagesStore.createIndex("containerId", "containerId", { unique: false });
+                pagesStore.createIndex("image", "image", { unique: false });
+            }
+
+            // Create the "containers" object store
+            if (!db.objectStoreNames.contains("containers")) {
+                const containersStore = db.createObjectStore("containers", { keyPath: "id", autoIncrement: true });
+                containersStore.createIndex("type", "type", { unique: false });
+                containersStore.createIndex("name", "name", { unique: false });
+                containersStore.createIndex("color", "color", { unique: false });
+                containersStore.createIndex("order", "order", { unique: false });
+                containersStore.createIndex("parentPageId", "order", { unique: false });
+            }
+
+            // Create the "settings" object store
+            if (!db.objectStoreNames.contains("settings")) {
+                db.createObjectStore("settings", { keyPath: "id" });
+            }
+
+            // Create the "background" object store
+            if (!db.objectStoreNames.contains("background")) {
+                db.createObjectStore("background", { keyPath: "id" });
+                //await fetchDefaultBackgroundImage(); // Fetch the default background
+            }
+        };
+
+        request.onsuccess = async (event) => {
+            db = event.target.result;
+            // Create a first HomeParentPage
+            try {
+                await addPage(id = 0, 'Start', color='red', comment='', order=0, containerId='')
+            } catch (error) {
+                console.info("If it fails here: you can usually ignore it. ((It's because of the manual setting of id = 0 which is a unique identifier.))");   
+                console.error(error)
+            }            
+            resolve();
+        };
+
+        request.onerror = (event) => {
+            console.error("Error opening IndexedDB:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+// instead, backgroundimage = '' as a default. -- Also, there was some error with this function anyway
+// Fetch default background image and store it in the database
+//async function fetchDefaultBackgroundImage() {
+//    const defaultImageUrl = "https://media.istockphoto.com/id/539271875/es/foto/bobinado-mountain-road-sin-coches.webp?s=1024x1024&w=is&k=20&c=DlVy6JBde8xx3DKIpaWec8KT1IJiQ8DMgD0Twu4CrEI=";
+//
+//    try {
+//        const response = await fetch(defaultImageUrl);
+//        const blob = await response.blob();
+//
+//        // Open a transaction to the "background" store
+//        const transaction = db.transaction(["background"], "readwrite");
+//        const store = transaction.objectStore("background");
+//
+//        // Store the image in the database
+//        await new Promise((resolve, reject) => {
+//            const request = store.put({ id: "background", image: blob });
+//            request.onsuccess = () => {
+//                console.log("Default background image stored successfully.");
+//                resolve();
+//            };
+//            request.onerror = (event) => {
+//                console.error("Error storing default background image:", event.target.errorCode);
+//                reject(event.target.errorCode);
+//            };
+//        });
+//    } catch (error) {
+//        console.error("Error fetching default background image:", error);
+//    }
+//}
+
+// Add new container to IndexedDB
+function addContainerToDB(id, name, parentPageId) {
+    return new Promise((resolve, reject) => {
+        console.log('parentID =', parentPageId)
+        const transaction = db.transaction(["containers"], "readwrite");
+        const store = transaction.objectStore("containers");
+        const request = store.add({ id, name, parentPageId});
+
+        request.onsuccess = () => resolve();
+        request.onerror = (event) => reject(event.target.errorCode);
+    });
+}
+
+function addFullContainerToDB(id, name, parentPageId, type, color, order) {
+    return new Promise((resolve, reject) => {
+        console.log('parentID =', parentPageId)
+        const transaction = db.transaction(["containers"], "readwrite");
+        const store = transaction.objectStore("containers");
+        const request = store.add({id, name, parentPageId, type, color, order});
+
+        request.onsuccess = () => resolve();
+        request.onerror = (event) => reject(event.target.errorCode);
+    });
+}
+
+// Get all containers with the specified parentPageId from IndexedDB
+function getPageContainers(parentPageId) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["containers"], "readonly");
+        const store = transaction.objectStore("containers");
+        // not using the index search because of trouble in the implementation
+        const request = store.getAll(); // Fetch all containers
+        
+        request.onsuccess = () => {
+            const filteredArray = request.result.filter(item => item.parentPageId === parentPageId);
+            console.log('result:', filteredArray);
+            resolve(filteredArray);
+        };
+        request.onerror = (event) => reject(event.target.errorCode);
+    });
+}
+
+// Function to get a container by its ID from IndexedDB
+function getContainerById(containerId) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["containers"], "readonly");
+        const store = transaction.objectStore("containers");
+        const request = store.get(containerId);
+
+        request.onsuccess = () => {
+            if (request.result) {
+                resolve(request.result); // Return the container object
+            } else {
+                reject(`Container with ID ${containerId} not found.`);
+            }
+        };
+
+        request.onerror = (event) => {
+            console.error("Error fetching container:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+function getContainersByParentPageId(parentPageId) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["containers"], "readonly");
+        const store = transaction.objectStore("containers");
+
+        const request = store.getAll(); // Fetch all containers
+
+        request.onsuccess = () => {
+            const allContainers = request.result;
+
+            // Filter the containers by parentPageId
+            const filteredContainers = allContainers.filter(container => {
+                const parsedParentPageId = typeof parentPageId === "string" ? parseInt(parentPageId, 10) : parentPageId;
+                return container.parentPageId === parsedParentPageId;
+            });
+
+            console.log(`Filtered containers with parentPageId=${parentPageId}:`, filteredContainers);
+            resolve(filteredContainers);
+        };
+
+        request.onerror = (event) => {
+            console.error("Error fetching all containers:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+async function deleteContainerAndLinks(containerId) {
+    // Delete links associated with this container
+    const transactionLinks = db.transaction(["bookmarks"], "readwrite");
+    const bookmarksStore = transactionLinks.objectStore("bookmarks");
+    const links = await getBookmarksByContainer(containerId);
+    if (links){
+        for (const link of links) {
+            //await bookmarksStore.delete(link.id);
+            bookmarksStore.delete(link.id);
+        }
+    }
+    const pages = await getPagesByContainer(containerId);
+    console.log('all Pages:', pages);
+    if (pages){
+        for (const page of pages) {
+            console.log('deleting page:', page);
+            await deletePageFromDB(page.id);
+        }
+    }
+
+    // Delete the container
+    const transactionContainer = db.transaction(["containers"], "readwrite");
+    const containerStore = transactionContainer.objectStore("containers");
+    containerStore.delete(containerId);
+}
+
+// Get bookmarks by container ID
+function getBookmarksByContainer(containerId) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["bookmarks"], "readonly");
+        const store = transaction.objectStore("bookmarks");
+        const index = store.index("containerId");
+
+        // Ensure containerId is the correct type, assuming integer storage
+        const parsedContainerId = typeof containerId === 'string' ? parseInt(containerId, 10) : containerId;
+        console.log('ContainerID to parse:', parsedContainerId);
+        const request = index.getAll(parsedContainerId);
+
+        request.onsuccess = () => {
+            resolve(request.result);
+        };
+
+        request.onerror = (event) => {
+            console.error("Error fetching bookmarks by containerId:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+// Get bookmarks by container ID
+function getPagesByContainer(containerId) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["pages"], "readonly");
+        const store = transaction.objectStore("pages");
+        const index = store.index("containerId");
+        // Ensure containerId is the correct type, assuming integer storage
+        const parsedContainerId = typeof containerId === 'string' ? parseInt(containerId, 10) : containerId;
+        const request = index.getAll(parsedContainerId);
+        request.onsuccess = () => {
+            resolve(request.result);
+        };
+        request.onerror = (event) => {
+            console.error("Error fetching pages by containerId:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+function addBookmark(name, url, color, comment, order, containerId) {
+    return new Promise((resolve, reject) => {
+        //const Id = Date.now(); // Use timestamp as unique ID
+        const transaction = db.transaction(["bookmarks"], "readwrite");
+        const store = transaction.objectStore("bookmarks");
+        const request = store.add({name, url, color, comment, order, containerId });
+
+        request.onsuccess = () => {
+            resolve();
+        };
+
+        request.onerror = (event) => {
+            console.error("Error adding bookmark:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+function addPage(id, name, color, comment, order, containerId, image) {
+    return new Promise(async (resolve, reject) => {
+        const transaction = db.transaction(["pages"], "readwrite");
+        const store = transaction.objectStore("pages");
+        const request = await store.add({ id, name, color, comment, order, containerId, image});
+        request.onsuccess = () => {
+            resolve();
+        };
+        request.onerror = (event) => {
+            console.error("Error adding page:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+function getBookmarks() {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["bookmarks"], "readonly");
+        const store = transaction.objectStore("bookmarks");
+        const request = store.getAll();
+
+        request.onsuccess = (event) => {
+            resolve(event.target.result);
+        };
+
+        request.onerror = (event) => {
+            console.error("Error fetching bookmarks:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+function getBookmarkById(id) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["bookmarks"], "readonly");
+        const store = transaction.objectStore("bookmarks");
+        const request = store.get(id);
+
+        request.onsuccess = () => {
+            const requestcopy = request.result;
+            resolve(requestcopy);
+        };
+
+        request.onerror = (event) => {
+            console.error("Error retrieving bookmark by ID:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+function getPageById(id) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["pages"], "readonly");
+        const store = transaction.objectStore("pages");
+        const request = store.get(id);
+
+        request.onsuccess = () => {
+            resolve(request.result);
+        };
+
+        request.onerror = (event) => {
+            console.error("Error retrieving pages by ID:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+// Update Container Order upon drop
+async function updateContainerOrder(id, newOrder) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["containers"], "readwrite");
+        const store = transaction.objectStore("containers");
+        const request = store.get(id);
+        
+        request.onsuccess = () => {
+            const data = request.result;
+            data.order = newOrder;
+
+            const updateRequest = store.put(data);
+            updateRequest.onsuccess = () => {
+                console.log("container order updated successfully:", data);
+                resolve();
+            };
+            updateRequest.onerror = (event) => {
+                console.error("Error updating container:", event.target.errorCode);
+                reject(event.target.errorCode);
+            };
+        };
+
+        request.onerror = (event) => {
+            console.error("Error retrieving container:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+// Update a bookmark by ID
+async function updateBookmark(id, newName, newUrl, newColor, newComment, newOrder, newContainerId) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["bookmarks"], "readwrite");
+        const store = transaction.objectStore("bookmarks");
+        const request = store.get(id);
+        const newContainerIdInt = parseInt(newContainerId, 10); // Ensure containerId is an integer
+        
+        request.onsuccess = () => {
+            const data = request.result;
+            data.name = newName;
+            data.url = newUrl;
+            data.color = newColor;
+            data.comment = newComment;
+            data.order = newOrder;
+            data.containerId = newContainerIdInt;
+
+            const updateRequest = store.put(data);
+            updateRequest.onsuccess = () => {
+                console.log("Bookmark updated successfully:", data);
+                resolve();
+            };
+            updateRequest.onerror = (event) => {
+                console.error("Error updating bookmark:", event.target.errorCode);
+                reject(event.target.errorCode);
+            };
+        };
+
+        request.onerror = (event) => {
+            console.error("Error retrieving bookmark:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+// Update a page by ID
+function updatePage(id, newName, newColor, newComment, newOrder, newContainerId, image) {
+    return new Promise((resolve, reject) => {
+        console.log("Updating page:", { id, newName, newColor, newComment, newOrder, newContainerId, image });
+        const transaction = db.transaction(["pages"], "readwrite");
+        const store = transaction.objectStore("pages");
+        const request = store.get(id);
+        const newContainerIdInt = parseInt(newContainerId, 10); // Ensure containerId is an integer
+
+        request.onsuccess = () => {
+            const data = request.result;
+            data.name = newName;
+            data.color = newColor;
+            data.comment = newComment;
+            data.order = newOrder;
+            data.containerId = newContainerIdInt;
+            data.image = image;
+
+            const updateRequest = store.put(data);
+            updateRequest.onsuccess = () => {
+                console.log("Page updated successfully:", data);
+                resolve();
+            };
+            updateRequest.onerror = (event) => {
+                console.error("Error updating page:", event.target.errorCode);
+                reject(event.target.errorCode);
+            };
+        };
+
+        request.onerror = (event) => {
+            console.error("Error retrieving page:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+// Delete a bookmark by ID
+function deleteBookmark(id) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["bookmarks"], "readwrite");
+        const store = transaction.objectStore("bookmarks");
+        const request = store.delete(id);
+
+        request.onsuccess = resolve;
+        request.onerror = (event) => {
+            console.error("Error deleting bookmark:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+// Delete a bookmark by ID
+async function deletePageFromDB(id) {
+    return new Promise(async (resolve, reject) => {
+        const subcontainers = await getContainersByParentPageId(id);
+        if (subcontainers){
+            subcontainers.forEach(async subcontainer => {
+                await deleteContainerAndLinks(subcontainer.id);
+            });
+        }
+        const transaction = db.transaction(["pages"], "readwrite");
+        const store = transaction.objectStore("pages");
+        const request = store.delete(id);
+        request.onsuccess = resolve;
+        request.onerror = (event) => {
+            console.error("Error deleting page:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+async function loadSettings(pageId) {
+    const page = await getPageById(pageId);
+    const transaction = db.transaction("settings", "readonly");
+    const settingsStore = transaction.objectStore("settings");
+    document.querySelector('h1').innerText = page.name || "NoHomepage";
+    document.querySelector('title').innerText = "My Bookmarks";
+
+    settingsStore.get(1).onsuccess = (event) => {
+        const settings = event.target.result;
+        if (settings) {
+            document.querySelector('title').innerText = settings.title || "My Bookmarks";
+            console.log("Updating Title:", settings.title);
+        }
+    };
+
+    transaction.onerror = (event) => {
+        console.error("Error loading settings:", event.target.errorCode);
+    };
+}
+
+
+async function saveSettings() {
+    const newTitle = document.getElementById('mainTitle').value;
+    const fileInput = document.getElementById('backgroundImageUpload'); // File input for local image upload
+    const newFile = fileInput.files[0]; // Get the selected file
+    if (newFile) {
+        const blob = await newFile.arrayBuffer(); // Convert file to Blob
+        const fileBlob = new Blob([blob], { type: newFile.type });
+        await updatePage(id=0, newTitle, color = "", comment = '', order = 0, newContainerId = '', image = fileBlob);
+    }else{
+        await updatePage(id = 0, newTitle);
+    }
+
+    try {
+        // Save the settings data
+        const settingsTransaction = db.transaction("settings", "readwrite");
+        const settingsStore = settingsTransaction.objectStore("settings");
+
+        const settingsData = { id: 1, title: newTitle };
+        await new Promise((resolve, reject) => {
+            const request = settingsStore.put(settingsData);
+            request.onsuccess = resolve;
+            request.onerror = (event) => reject(event.target.errorCode);
+        });
+        hideSettingsPopup(); // Close the settings popup
+    } catch (error) {
+        console.error("Error saving settings:", error);
+    }
+}
+
+async function exportDatabase() {
+    try {
+        const exportData = {};
+        
+        for (const storeName of db.objectStoreNames) {
+            const transaction = db.transaction(storeName, "readonly");
+            console.log('Storename:', storeName);
+            const store = transaction.objectStore(storeName);
+            const request = store.getAll();
+            const data = await new Promise((resolve, reject) => {
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+
+            // Wait for transaction to complete
+            await new Promise((resolve, reject) => {
+                transaction.oncomplete = () => {
+                    console.log(`Transaction for store "${storeName}" completed.`);
+                    resolve();
+                };
+                transaction.onerror = (event) => {
+                    console.error(`Transaction error for store "${storeName}":`, event.target.error);
+                    reject(event.target.error);
+                };
+            });
+
+            // Handle page.image conversion for "pages" store after transaction
+            if (storeName === "pages") {
+                for (const item of data) {
+                    if (item.image && item.image !== '' && item.image instanceof Blob) {
+                        console.log('Queueing image conversion for item:', item);
+                        console.log('Inspecting Blob:', item.image);
+                        try {
+                            item.image = await blobToBase64(item.image);
+                            console.log('Conversion success:', item);
+                        } catch (error) {
+                            console.warn('Error converting image, clearing image field:', error);
+                            item.image = '';
+                        }
+                    } else if (item.image) {
+                        console.log('Setting image to zero:', item);
+                        item.image = '';
+                    } else {
+                        item.image = '';
+                        console.log('Missing image property at:', item);
+                    }
+                }
+            }
+            exportData[storeName] = data;
+        }
+
+        console.log('Done 3');
+
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "BookmarksDB.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        console.log("Database exported successfully.");
+    } catch (error) {
+        console.error("Error exporting database:", error);
+    }
+}
+
+
+async function importDatabase(event) {
+    const file = event.target.files[0];
+    let homePageImage;
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+        try {
+            const importData = JSON.parse(e.target.result);
+            // Rehydrate page.image from Base64 strings
+            for (const page of importData.pages || []) {
+                if (page.image && page.image != '') {
+                    page.image = await base64ToBlob(page.image);
+                    if (page.id == 0){
+                        homePageImage = page.image;
+                    }
+                }
+            }
+
+            // Order of processing: pages -> containers -> bookmarks
+            const processingOrder = ["pages", "containers", "bookmarks"];
+            const pageIdMap = {}; // Map of old-to-new page IDs
+            const containerIdMap = {}; // Map of old-to-new container IDs
+
+            // Create a new "Import" page
+            const importedPageName = file.name.replace(".json", ""); // Use file name as a base
+            const newImportPageId = Date.now();
+            // Check if "Import" container exists, otherwise create it
+            const importContainer = await ensureImportContainer();
+            // Create a new page under the "Import" container
+            const importedPageId = await createNewPageInImportContainer(importContainer.id, file.name, homePageImage);
+            //await addPage(newImportPageId, `Imported: ${importedPageName}`, "#808080", "Imported database content", 0, 0, homePageImage);
+            // First Pass: Assign new IDs
+            for (const storeName of processingOrder) {
+                const items = importData[storeName] || [];
+                let nextId = await getNextId(storeName);
+
+                for (const item of items) {
+                    if (storeName === "pages") {
+                        // Map old page ID to new page ID
+                        const oldPageId = item.id;
+                        item.id = nextId++;
+                        pageIdMap[oldPageId] = item.id;
+
+                        // Pages reference containers via containerId
+                        if (containerIdMap[item.containerId]) {
+                            item.containerId = containerIdMap[item.containerId];
+                        }
+                        if (oldPageId == 0){
+                            console.log('old Homepage:', item);
+                        }
+                    } else if (storeName === "containers") {
+                        // Map old container ID to new container ID
+                        const oldContainerId = item.id;
+                        item.id = nextId++;
+                        containerIdMap[oldContainerId] = item.id;
+
+                        // If parentPageId is 0, assign the new Import Page ID
+                        item.parentPageId = item.parentPageId === 0 ? importedPageId : pageIdMap[item.parentPageId] || item.parentPageId;
+                    } else if (storeName === "bookmarks") {
+                        // Bookmarks reference containers via containerId
+                        console.log('bookmark before:', item);
+                        if (containerIdMap[item.containerId]) {
+                            item.containerId = containerIdMap[item.containerId];
+                        }
+                        item.id = nextId++;
+                        console.log('bookmark after:', item);
+                    }
+                }
+            }
+
+            // Second Pass: Update cross-references (e.g., page.containerId to new IDs)
+            for (const page of importData.pages || []) {
+                if (containerIdMap[page.containerId]) {
+                    page.containerId = containerIdMap[page.containerId];
+                }
+            }
+            //// Second Pass: Update cross-references (e.g., page.containerId to new IDs)
+            //for (const bookmark of importData.bookmarks || []) {
+            //    if (containerIdMap[bookmark.containerId]) {
+            //        bookmark.containerId = containerIdMap[bookmark.containerId];
+            //        console.log('newly assigned Bookmark ID');
+            //    }
+            //}
+
+            // Import the updated data
+            for (const storeName of processingOrder) {
+                await new Promise((resolve, reject) => {
+                    const transaction = db.transaction(storeName, "readwrite");
+                    const store = transaction.objectStore(storeName);
+
+                    const items = importData[storeName] || [];
+                    for (const item of items) {
+                        const addRequest = store.add(item);
+                        addRequest.onsuccess = () => {};
+                        addRequest.onerror = (event) => reject(event.target.error);
+                    }
+
+                    transaction.oncomplete = resolve;
+                    transaction.onerror = (event) => reject(event.target.error);
+                });
+            }
+
+            console.log("Database imported successfully.");
+            displayContainers(0); // Refresh the UI
+        } catch (error) {
+            console.error("Error importing database:", error);
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+
+
+async function getNextId(storeName) {
+    return new Promise(async (resolve, reject) => {
+        const transaction = db.transaction([storeName], "readonly");
+        const store = transaction.objectStore(storeName);
+        const request = await store.getAll();
+
+        request.onsuccess = () => {
+            const allItems = request.result;
+            const maxId = allItems.length > 0 ? Math.max(...allItems.map(item => item.id)) : 0;
+            resolve(maxId + 1);
+        };
+
+        request.onerror = (event) => {
+            console.error(`Error retrieving next ID for ${storeName}:`, event.target.error);
+            reject(event.target.error);
+        };
+    });
+}
+
+// Helper function to convert Blob to Base64
+async function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = (e) => reject(new Error(`FileReader failed: ${e.target.error?.code}`));
+        console.log('blob:', blob);
+        reader.readAsDataURL(blob); // Converts Blob to Base64 string
+    });
+}
+
+
+// Helper function to convert Base64 string back to Blob
+async function base64ToBlob(base64) {
+    try {
+        const [metadata, data] = base64.split(",");
+        const mime = metadata.match(/:(.*?);/)[1];
+        const binary = atob(data);
+        const array = [];
+        for (let i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        console.log('SUCCESS');
+        return new Blob([new Uint8Array(array)], { type: mime });
+    } catch (error) {
+        console.log('skipped image conversion', error, base64);
+        return '';
+    }
+}
+</script>
+<script>
+    // adding new pages is an issue. Maxybe because of how IDs are currently being handled || ID is always null.
+document.addEventListener("DOMContentLoaded", async () => {
+    //deleteDatabase();
+    await initDB();
+    await loadSettings(pageId = 0);
+    const homepage = await getPageById(pageId = 0);
+    navigateToParentPage(pageId = 0, pageName = 'Home', homepage.image);
+    displayContainers(parentPageId = 0); // 0 being the page ID of the home folder
+});
+
+function deleteDatabase() {
+    if (confirm("Are you sure you want to delete this entire database?")) {
+        const dbName = "BookmarksDB"; // Replace with your actual database name
+        const request = indexedDB.deleteDatabase(dbName);
+
+        request.onsuccess = () => {
+            console.log(`Database "${dbName}" deleted successfully.`);
+        };
+
+        request.onerror = (event) => {
+            console.error(`Error deleting database "${dbName}":`, event.target.errorCode);
+        };
+
+        request.onblocked = () => {
+            console.warn(`Database "${dbName}" deletion is blocked. Close all open tabs using this database.`);
+        };
+    };
+}
+
+// Add a new container
+async function addContainer() {
+    const containerId = Date.now(); // Use timestamp as unique ID
+    const containerName = "New Container"; // Default name
+    const currentParentPageId = getParentPageID();
+    await addContainerToDB(containerId, containerName, currentParentPageId);
+    showContainerPopup(containerId, isEdit = false, {name: containerName})
+    // Save new container to database
+    displayContainers(currentParentPageId); // Refresh display to include new container
+}
+
+async function displayContainers(parentPageId) {
+    console.log('starting to display', parentPageId);
+    const containers = await getPageContainers(parentPageId); // Get all containers from IndexedDB
+    console.log('retrieved container:', containers);
+    const containerList = document.getElementById('containers-list');
+    containerList.innerHTML = ''; // Clear existing containers
+
+    containers.sort((a, b) => a.order - b.order).forEach(container => {
+        // Create a container div for each container
+        const containerDiv = document.createElement('div');
+        containerDiv.classList.add('link-container');
+        containerDiv.dataset.id = container.id; // Store container ID
+
+        // Container title div
+        const titleDiv = document.createElement('div');
+        titleDiv.classList.add('subsubtopic');
+        titleDiv.style.display = 'flex';
+        titleDiv.style.justifyContent = 'space-between';
+        titleDiv.style.alignItems = 'center';
+        titleDiv.style.backgroundColor = container.color || '#4285f4';
+        titleDiv.style.borderRadius = '5px';
+        titleDiv.style.width = '100%';
+
+        // Editable container title
+        const containerTitle = document.createElement('h2');
+        containerTitle.textContent = container.name;
+        containerTitle.classList.add('container-title');
+        containerTitle.style.margin = 0;
+        containerTitle.style.color = '#fff';
+
+        // Button container for Edit and Delete buttons
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.flexDirection = 'column';
+        buttonContainer.style.alignItems = 'center';
+
+        // Edit button
+        const editButton = document.createElement('button');
+        editButton.innerHTML = '<i class="fas fa-edit"></i>';
+        editButton.onclick = () => showContainerPopup(container.id, true, container);
+
+        // Delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteButton.onclick = async () => {
+            if (confirm("Are you sure you want to delete this container and all its links?")) {
+                await deleteContainerAndLinks(container.id); // Delete container and its links
+                displayContainers(parentPageId); // Refresh the containers list
+            }
+        };
+
+        // Button container for Right and Left arrow buttons
+        const orderButtonContainer = document.createElement('div');
+        orderButtonContainer.style.display = 'flex';
+        orderButtonContainer.style.flexDirection = 'column';
+        orderButtonContainer.style.alignItems = 'center';
+
+        // Move right button
+        const rightButton = document.createElement('button');
+        rightButton.innerHTML = '<i class="fa fa-arrow-right"></i>';
+        rightButton.onclick = async () => {
+            await updateContainerOrder(container.id, container.order+1.5);
+            await displayContainers(parentPageId);
+            // Update order values in IndexedDB based on the new positions
+            const allContainers = Array.from(document.querySelectorAll('.link-container'));
+            const newOrder = allContainers.map((container, index) => ({
+                id: parseInt(container.dataset.id, 10),
+                order: index,
+            }));
+            for (const { id, order } of newOrder) {
+                await updateContainerOrder(id, order);
+            }
+            await displayContainers(parentPageId);
+        }
+
+        // Move left button
+        const leftButton = document.createElement('button');
+        leftButton.innerHTML = '<i class="fa fa-arrow-left"></i>';
+        leftButton.onclick = async () => {
+            await updateContainerOrder(container.id, container.order-1.5);
+            await displayContainers(parentPageId);
+            // Update order values in IndexedDB based on the new positions
+            const allContainers = Array.from(document.querySelectorAll('.link-container'));
+            const newOrder = allContainers.map((container, index) => ({
+                id: parseInt(container.dataset.id, 10),
+                order: index,
+            }));
+            for (const { id, order } of newOrder) {
+                await updateContainerOrder(id, order);
+            }
+            await displayContainers(parentPageId);
+        }
+
+        // Append buttons to the button container
+        buttonContainer.appendChild(editButton);
+        buttonContainer.appendChild(deleteButton);
+        // Append order-buttons to the button container
+        orderButtonContainer.appendChild(rightButton);
+        orderButtonContainer.appendChild(leftButton);
+
+        // Append title and buttons to titleDiv
+        titleDiv.appendChild(containerTitle);
+        titleDiv.appendChild(buttonContainer);
+        titleDiv.appendChild(orderButtonContainer);
+
+        // Append titleDiv to containerDiv
+        containerDiv.appendChild(titleDiv);
+        
+        if (container.type == 'links'){
+            // Bookmarks list for this container
+            const bookmarksList = document.createElement('div');
+            bookmarksList.id = `bookmarks-list-${container.id}`;
+            bookmarksList.style.width = `100%`;
+            bookmarksList.style.overflow = 'auto'; /* Make contents scrollable if they exceed the height */
+            bookmarksList.classList.add('bookmarks-list');
+            containerDiv.appendChild(bookmarksList);
+            // "Add Link" button for this container
+            const addLinkButton = document.createElement('button');
+            addLinkButton.textContent = "+ Add Link";
+            addLinkButton.onclick = () => showPopup(container.id); // Opens popup for this container
+            containerDiv.appendChild(addLinkButton);
+            // Add container to the main list
+            containerList.appendChild(containerDiv);
+            // Display bookmarks within this container
+            displayBookmarks(container.id);
+        } else if (container.type == 'pages'){
+            // Pages list for this container
+            const pagesList = document.createElement('div');
+            pagesList.id = `pages-list-${container.id}`;
+            pagesList.style.width = `100%`;
+            pagesList.style.overflow = 'auto'; /* Make contents scrollable if they exceed the height */
+            pagesList.classList.add('pages-list');
+            containerDiv.appendChild(pagesList);
+            // "Add Link" button for this container
+            const addLinkButton = document.createElement('button');
+            addLinkButton.textContent = "+ Add Page";
+            addLinkButton.onclick = () => showPagePopup(container.id); // Opens popup for this container
+            containerDiv.appendChild(addLinkButton);
+            // Add container to the main list
+            containerList.appendChild(containerDiv);
+            // Display pages within this container
+            console.log('now we display pages of:', container.id);
+            displayPages(container.id);
+        } else{
+            console.log("unknown container type:", container.type);
+        }
+    })
+}
+
+
+// Display bookmarks within a specific container
+async function displayBookmarks(containerId) {
+    var bookmarks = await getBookmarksByContainer(containerId); // Fetch bookmarks for this container
+    var containerDiv = document.getElementById(`bookmarks-list-${containerId}`);
+    containerDiv.innerHTML = ''; // Clear existing links
+
+    bookmarks.sort((a, b) => a.order - b.order).forEach(bookmark => {
+        // Create a div for each bookmark link and its buttons
+        const linkDiv = document.createElement('div');
+        linkDiv.classList.add('bookmarkContainer');
+        linkDiv.style.backgroundColor = bookmark.color || '#65a9d7';
+        linkDiv.draggable = true;
+        linkDiv.dataset.id = bookmark.id;
+
+        // Set up drag-and-drop event listeners
+        linkDiv.addEventListener('dragstart', handleDragStart);
+        linkDiv.addEventListener('dragover', handleDragOver);
+        linkDiv.addEventListener('drop', handleDrop);
+
+        // Link and comment container
+        const linkContainer = document.createElement('div');
+        linkContainer.style.display = 'flex';
+        linkContainer.style.flexDirection = 'column';
+        linkContainer.style.flexGrow = '1';
+        linkContainer.style.overflow = 'scoll';
+
+        // Link element
+        const link = document.createElement('a');
+        link.href = bookmark.url;
+        link.target = '_blank';
+        link.textContent = bookmark.name;
+
+        // Comment element below the link
+        const commentDiv = document.createElement('div');
+        commentDiv.style.fontSize = '0.7em';
+        commentDiv.style.color = '#eee';
+        commentDiv.style.marginTop = '4px';
+        commentDiv.textContent = bookmark.comment || '';
+
+        // Append link and comment to the link container
+        link.appendChild(commentDiv);
+        linkContainer.appendChild(link);
+
+        // Button container for Edit and Delete buttons
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.flexDirection = 'column';
+        buttonContainer.style.alignItems = 'center';
+
+        // Edit button
+        const editButton = document.createElement('button');
+        editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Add Font Awesome edit icon
+        editButton.onclick = () => editLink(bookmark.id, bookmark.name, bookmark.url, bookmark.color, bookmark.comment, bookmark.containerId);
+
+        // Delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>'; // Add Font Awesome trash icon
+        deleteButton.onclick = () => deleteLink(bookmark.id, containerId);
+
+
+        // Append buttons to the button container
+        buttonContainer.appendChild(editButton);
+        buttonContainer.appendChild(deleteButton);
+
+        // Flex layout for linkDiv to align buttonContainer to the right
+        linkDiv.style.display = 'flex';
+        linkDiv.style.alignItems = 'center';
+
+        // Append linkContainer and buttonContainer to linkDiv
+        linkDiv.appendChild(linkContainer);
+        linkDiv.appendChild(buttonContainer);
+
+        // Append the entire linkDiv to the container-specific bookmarks list
+        containerDiv.appendChild(linkDiv);
+    });
+}
+
+// Display pages within a specific container
+async function displayPages(containerId) {
+    var pages = await getPagesByContainer(containerId); // Fetch bookmarks for this container
+    console.log('received pages:', pages);
+    var containerDiv = document.getElementById(`pages-list-${containerId}`);
+    containerDiv.innerHTML = ''; // Clear existing links
+
+    pages.sort((a, b) => a.order - b.order).forEach(page => {
+        // Create a div for each bookmark link and its buttons
+        const linkDiv = document.createElement('div');
+        linkDiv.classList.add('subsubtopic');
+        linkDiv.style.backgroundColor = page.color || '#65a9d7';
+        linkDiv.draggable = true;
+        linkDiv.dataset.id = page.id;
+
+        // Set up drag-and-drop event listeners
+        linkDiv.addEventListener('dragstart', handleDragStart);
+        linkDiv.addEventListener('dragover', handleDragOver);
+        linkDiv.addEventListener('drop', handleDrop);
+
+        // Link and comment container
+        const pageContainer = document.createElement('div');
+        pageContainer.classList.add('pageContainer');
+        pageContainer.style.display = 'flex';
+        pageContainer.style.padding = '20px';
+        pageContainer.style.flexDirection = 'column';
+        pageContainer.style.flexGrow = '1';
+        pageContainer.style.overflow = 'scroll';
+        pageContainer.style.cursor = 'pointer';
+        //pageContainer.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.5)";
+        pageContainer.onclick = () => {
+            navigateToParentPage(page.id, page.name, page.image);
+         }
+
+
+        // Page element as a button or div
+        const pageName = document.createElement('div');
+        pageName.textContent = page.name;
+        pageName.style.color = '#ffffff';
+        pageName.style.fontFamily = 'TimesNewRoman'
+        pageName.style.fontSize = '1.5em'
+        pageName.style.fontWeight = 'bold';
+        pageName.style.alignSelf = 'center';
+
+        // Comment element below the link
+        const commentDiv = document.createElement('div');
+        commentDiv.style.fontSize = '0.9em';
+        commentDiv.style.color = '#eee';
+        commentDiv.style.marginTop = '4px';
+        commentDiv.textContent = page.comment || '';
+
+        // Append link and comment to the link container
+        pageContainer.appendChild(pageName);
+        pageContainer.appendChild(commentDiv);
+
+        // Button container for Edit and Delete buttons
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.flexDirection = 'column';
+        buttonContainer.style.alignItems = 'center';
+
+        // Edit button
+        const editButton = document.createElement('button');
+        editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Add Font Awesome edit icon
+        editButton.onclick = () => editPage(page.id, page.name, page.color, page.comment, page.containerId);
+
+        // Delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>'; // Add Font Awesome trash icon
+        deleteButton.onclick = () => deletePage(page.id, containerId);
+
+
+        // Append buttons to the button container
+        buttonContainer.appendChild(editButton);
+        buttonContainer.appendChild(deleteButton);
+
+        // Flex layout for linkDiv to align buttonContainer to the right
+        linkDiv.style.display = 'flex';
+        linkDiv.style.alignItems = 'center';
+
+        // Append linkContainer and buttonContainer to linkDiv
+        linkDiv.appendChild(pageContainer);
+        linkDiv.appendChild(buttonContainer);
+
+        // Append the entire linkDiv to the container-specific bookmarks list
+        containerDiv.appendChild(linkDiv);
+    });
+}
+
+let draggedElement = null;
+
+function handleDragStart(event) {
+    draggedElement = event.currentTarget;
+    event.dataTransfer.effectAllowed = 'move';
+
+    // Attach the container ID and type (bookmarks/pages) to the data transfer
+    const containerId = draggedElement.closest('.bookmarks-list, .pages-list').id.split('-')[2];
+    const type = draggedElement.closest('.bookmarks-list') ? 'bookmark' : 'page';
+    event.dataTransfer.setData('text/plain', JSON.stringify({ id: draggedElement.dataset.id, containerId, type }));
+}
+
+function handleDragOver(event) {
+    event.preventDefault(); // Allow drop
+    event.dataTransfer.dropEffect = 'move';
+}
+
+async function handleDrop(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const targetContainerId = event.currentTarget.closest('.bookmarks-list, .pages-list')?.id?.split('-')[2];
+    const targetType = event.currentTarget.closest('.bookmarks-list') ? 'bookmark' : 'page';
+
+    if (!targetContainerId || !draggedElement) {
+        console.error("Error: Invalid drag-and-drop target.");
+        return;
+    }
+
+    // Parse the data from the drag start
+    const draggedData = JSON.parse(event.dataTransfer.getData('text/plain'));
+    const { id, containerId: sourceContainerId, type } = draggedData;
+
+    // Ensure source and target types match
+    if (type !== targetType) {
+        console.error("Error: Dragged element type and drop target type do not match.");
+        return;
+    }
+
+    const sourceContainerDiv = document.getElementById(`${type === 'bookmark' ? 'bookmarks-list' : 'pages-list'}-${sourceContainerId}`);
+    const targetContainerDiv = document.getElementById(`${type === 'bookmark' ? 'bookmarks-list' : 'pages-list'}-${targetContainerId}`);
+
+    if (!sourceContainerDiv || !targetContainerDiv) {
+        console.error("Error: Source or target container does not exist.");
+        return;
+    }
+
+    // Update the UI: Move the dragged element to the new container
+    targetContainerDiv.insertBefore(draggedElement, event.currentTarget);
+    // updating target container
+    try {
+        // Update order values in IndexedDB based on the new positions
+        const newOrder = Array.from(targetContainerDiv.children).map((child, index) => ({
+            id: parseInt(child.dataset.id, 10), // Ensure ID is parsed as an integer
+            order: index,
+        }));
+        console.log("newOrder", newOrder);
+        // Save updated order for each bookmark in IndexedDB
+        for (const { id, order } of newOrder) {
+            if (type == 'bookmark'){
+                const bookmark = await getBookmarkById(id); // Fetch bookmark by ID
+                await updateBookmark(id, bookmark.name, bookmark.url, bookmark.color, bookmark.comment, order, targetContainerId);
+            }else if (type == 'page'){
+                const page = await getPageById(id); // Fetch bookmark by ID
+                await updatePage(id, page.name, page.color, page.comment, order, targetContainerId);
+            }
+        }
+        displayBookmarks(targetContainerId);
+
+    } catch (error) {
+        console.error("Error updating target container:", error);
+    }
+    // updating source container
+    try {
+        // Update order values in IndexedDB based on the new positions
+        const newOrder = Array.from(sourceContainerDiv.children).map((child, index) => ({
+            id: parseInt(child.dataset.id, 10), // Ensure ID is parsed as an integer
+            order: index,
+        }));
+        // Save updated order for each bookmark in IndexedDB
+        for (const { id, order } of newOrder) {
+            if (type == 'bookmark'){
+                const bookmark = await getBookmarkById(id); // Fetch bookmark by ID
+                await updateBookmark(id, bookmark.name, bookmark.url, bookmark.color, bookmark.comment, order, sourceContainerId);
+            }else if (type == 'page'){
+                const page = await getPageById(id); // Fetch bookmark by ID
+                await updatePage(id, page.name, page.color, page.comment, order, sourceContainerId);
+            }
+        }
+        displayBookmarks(sourceContainerId);
+
+    } catch (error) {
+        console.error("Error updating source container:", error);
+    }
+    draggedElement = null; // Reset dragged element reference
+}
+
+async function logBookmarksForContainer(containerId) {
+    const bookmarks = await getBookmarksByContainer(containerId);
+    console.log(`Bookmarks for container ${containerId}:`, bookmarks);
+}
+
+let breadcrumbStack = []; // Stack to track navigation path
+function getParentPageID() {
+    return parseInt(document.getElementById('parentPageID').value, 10);
+}
+
+function setParentPageID(id) {
+    document.getElementById('parentPageID').value = id;
+    console.log("Parent Page ID set to:", id);
+}
+function updateBreadcrumb() {
+    const breadcrumbNav = document.getElementById('breadcrumb');
+    breadcrumbNav.innerHTML = ''; // Clear existing breadcrumbs
+
+    breadcrumbStack.forEach((item, index) => {
+        // Create breadcrumb element
+        const breadcrumbItem = document.createElement('span');
+        breadcrumbItem.textContent = item.name;
+        breadcrumbItem.style.cursor = 'pointer';
+
+        // Navigate to the corresponding parentPageID when clicked
+        breadcrumbItem.onclick = () => {
+            breadcrumbStack = breadcrumbStack.slice(0, index + 1); // Trim stack to selected level
+            setParentPageID(item.id);
+            displayContainers(item.id);
+            if (item.image) {
+                const imageUrl = URL.createObjectURL(item.image);
+                console.log("Updating background with:", imageUrl);
+                document.body.style.backgroundImage = `url('${imageUrl}')`;
+            } else {
+                console.warn("No background image found in the database.");
+                document.body.style.backgroundImage = '';
+            }
+            updateBreadcrumb(); // Update breadcrumb UI
+        };
+
+        // Add a separator if not the last item
+        breadcrumbNav.appendChild(breadcrumbItem);
+        if (index < breadcrumbStack.length - 1) {
+            const separator = document.createElement('span');
+            separator.textContent = ' > ';
+            breadcrumbNav.appendChild(separator);
+        }
+    });
+}
+
+function navigateToParentPage(parentPageId, parentPageName, image = '') {
+    // update bg Image
+    if (image) {
+        console.log(image);
+        const imageUrl = URL.createObjectURL(image);
+        console.log("Updating background with:", imageUrl);
+        document.body.style.backgroundImage = `url('${imageUrl}')`;
+    } else {
+        console.warn("No background image found in the database.");
+        document.body.style.backgroundImage = '';
+    }
+    // Add the current page to the breadcrumb stack
+    breadcrumbStack.push({ id: parentPageId, name: parentPageName, image: image });
+
+    // Update the parentPageID and display
+    setParentPageID(parentPageId);
+    displayContainers(parentPageId);
+    updateBreadcrumb(); // Refresh breadcrumb UI
+}
+
+</script>
+<script>
+    let editMode = false; // Tracks if the popup is in edit mode
+let currentEditId = null; // Stores the ID of the bookmark being edited
+var currentContainerId = null; // Stores the ID of the container for new or edited bookmarks
+
+// Show the popup form, optionally in edit mode
+function showPopup(containerId, isEdit = false, bookmark = {}) {
+    editMode = isEdit;
+    currentEditId = bookmark.id || null;
+    currentContainerId = containerId; // Set the current container ID
+
+    // Set form title and button text based on mode
+    document.getElementById('popupTitle').textContent = editMode ? 'Edit Link' : 'Add a New Link';
+    document.getElementById('popupButton').textContent = editMode ? 'Save Changes' : 'Add Link';
+
+    // Pre-fill form fields if in edit mode
+    document.getElementById('linkName').value = editMode ? bookmark.name : '';
+    document.getElementById('linkURL').value = editMode ? bookmark.url : '';
+    document.getElementById('linkColor').value = editMode ? bookmark.color || '#65a9d7' : '#65a9d7';
+    document.getElementById('linkComment').value = editMode ? bookmark.comment || '' : '';
+
+    document.getElementById('popupForm').style.display = 'block';
+    document.getElementById('popupOverlay').style.display = 'block';
+}
+
+// Hide the popup form and reset mode
+function hidePopup() {
+    document.getElementById('popupForm').style.display = 'none';
+    document.getElementById('popupOverlay').style.display = 'none';
+    editMode = false;
+    currentEditId = null;
+    currentContainerId = null;
+}
+
+// Save the link (either adding or editing)
+async function saveLink() {
+    const name = document.getElementById('linkName').value;
+    let url = document.getElementById('linkURL').value;
+    const color = document.getElementById('linkColor').value;
+    const comment = document.getElementById('linkComment').value; // Optional comment field
+
+    // Ensure the URL starts with "http://" or "https://"
+    if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;  // Prepend "https://" if missing
+    }
+
+    if (name && url) { // Check mandatory fields
+        let order = 0;
+
+        if (!editMode) {
+            // Get the highest current order value if adding a new bookmark
+            const bookmarks = await getBookmarksByContainer(currentContainerId);
+            order = bookmarks.length > 0 ? Math.max(...bookmarks.map(b => b.order)) + 1 : 0;
+        } else{
+            const currentBookmark = await getBookmarkById(currentEditId)
+            order = currentBookmark.order
+        }
+
+        console.log("Updating / saving bookmark with values:", {
+            id: currentEditId,
+            name,
+            url,
+            color,
+            comment,
+            order,
+            currentContainerId
+        });
+
+        if (editMode && currentEditId !== null) {
+            // Edit existing bookmark
+            await updateBookmark(currentEditId, name, url, color, comment, order, currentContainerId);
+        } else {
+            // Add new bookmark with calculated order and container ID
+            await addBookmark(name, url, color, comment, order, currentContainerId);
+        }
+
+        displayBookmarks(currentContainerId); // Refresh the displayed list for the specific container
+        hidePopup(); // Close the popup
+    }
+}
+
+// Edit an existing link by opening the popup in edit mode
+function editLink(id, name, url, color, comment, containerId) {
+    showPopup(containerId, true, { id, name, url, color, comment, containerId});
+}
+
+// Edit an existing page by opening the popup in edit mode
+function editPage(id, name, color, comment, containerId) {
+    showPagePopup(containerId, true, {id, name, color, comment, containerId});
+}
+
+// Delete a link and refresh the display
+async function deleteLink(id, containerId) {
+    if (confirm("Are you sure you want to delete this link?")) {
+        await deleteBookmark(id);
+        displayBookmarks(containerId); // Refresh the display for the specific container
+    }
+}
+
+// Delete a link and refresh the display
+async function deletePage(id, containerId) {
+    if (confirm("Are you sure you want to delete this page?")) {
+        await deletePageFromDB(id);
+        displayPages(containerId); // Refresh the display for the specific container
+    }
+}
+
+function showSettingsPopup() {
+    document.getElementById('settingsOverlay').style.display = 'block';
+    document.getElementById('settingsForm').style.display = 'block';
+}
+
+async function hideSettingsPopup() {
+    location.reload();
+    document.getElementById('settingsOverlay').style.display = 'none';
+    document.getElementById('settingsForm').style.display = 'none';
+}
+
+function editContainer(id, name, color) {
+    showPopup(id, true, { id, name, color }, "container");
+}
+
+async function showContainerPopup(containerId, isEdit = false, container = {}) {
+    editMode = isEdit;
+    currentEditId = containerId || null;
+
+    // Set popup title and button text
+    document.getElementById('containerPopupTitle').textContent = isEdit ? 'Edit Container' : 'Add a New Container';
+    document.getElementById('containerPopupButton').textContent = isEdit ? 'Save' : 'Add Container';
+
+    // Pre-fill fields if editing
+    document.getElementById('containerName').value = isEdit ? container.name : '';
+    document.getElementById('containerColor').value = isEdit ? container.color || '#4285f4' : '#4285f4';
+    
+    // Handle radio button selection
+    const containerType = isEdit ? container.type || 'links' : 'links'; // Default to 'links'
+    document.querySelector(`input[name="containerType"][value="${containerType}"]`).checked = true;
+    
+    // Disable radio buttons in edit mode
+    document.getElementById('radioLinks').disabled = isEdit;
+    document.getElementById('radioPages').disabled = isEdit;
+    
+    // Show move/copy options and dropdown only if in edit mode
+    const containerOptions = document.getElementById('containerOptions');
+    if (isEdit) {
+        containerOptions.style.display = 'block';
+        
+        // Populate the dropdown with all pages in the database
+        const parentPageDropdown = document.getElementById('parentPageDropdown');
+        parentPageDropdown.innerHTML = '<option value="" disabled selected>Select a page</option>'; // Reset options
+        let option;
+        try {
+            const childContainers = await getPageContainers(container.parentPageId); // Fetch all pages from IndexedDB
+            // Remove the container with id === containerId
+            const filteredContainers = childContainers.filter(childContainer => childContainer.id !== containerId);
+            console.log('filteredContainers:', filteredContainers);
+            filteredContainers.forEach(async childContainer =>{
+                if (childContainer.id !== containerId){
+                    const pages = await getPagesByContainer(childContainer.id);
+                    option = document.createElement('option');
+                    if (pages){
+                        pages.forEach(async page => {
+                            option = document.createElement('option');
+                            option.value = page.id;
+                            option.textContent = page.name;
+                            parentPageDropdown.appendChild(option);
+                        });
+                    }
+                }
+            })
+            const parentPage = await getPageById(container.parentPageId);
+            console.log('parentPage:', parentPage);
+            try {
+                const parentPageContainer = await getContainerById(parentPage.containerId);
+                console.log('parentPageContainer:', parentPageContainer);
+                const parentContainers = await getContainersByParentPageId(parentPageContainer.parentPageId);
+                console.log('parentContainers:', parentContainers);
+                parentContainers.forEach(async parentContainer =>{
+                    const pages = await getPagesByContainer(parentContainer.id);
+                    if (pages){
+                        console.log(pages);
+                        pages.forEach(async page => {
+                            option = document.createElement('option');
+                            option.value = page.id;
+                            option.textContent = page.name;
+                            parentPageDropdown.appendChild(option);
+                        });
+                    }
+                })
+                // Add Home directory
+                option = document.createElement('option');
+                option.value = 0;
+                option.textContent = 'Home';
+                parentPageDropdown.appendChild(option);
+                // add parentPage without producing double Home
+                if (parentPageContainer.parentPageId != 0){
+                    const directParentPage = await getPageById(parentPageContainer.parentPageId);
+                    option = document.createElement('option');
+                    option.value = parentPageContainer.parentPageId;
+                    option.textContent = directParentPage.name;
+                    parentPageDropdown.appendChild(option);
+                }
+            } catch (error) {
+                console.log('Current Page has no parent')
+            }
+
+            // Pre-select the current parent page, if applicable
+            if (container.parentPageId) {
+                parentPageDropdown.value = container.parentPageId;
+            }
+        } catch (error) {
+            console.error('Error populating parent page dropdown:', error);
+        }
+    } else {
+        containerOptions.style.display = 'none';
+    }
+
+    // Show the popup
+    document.getElementById('containerPopupForm').style.display = 'block';
+    document.getElementById('containerPopupOverlay').style.display = 'block';
+}
+
+
+function hideContainerPopup() {
+    document.getElementById('containerPopupForm').style.display = 'none';
+    document.getElementById('containerPopupOverlay').style.display = 'none';
+    editMode = false;
+    currentEditId = null;
+}
+
+function updateContainer() {
+    const selectedParentPageId = document.getElementById('parentPageDropdown').value;
+    const selectedParentPageIdInt = parseInt(selectedParentPageId);
+    const moveChecked = document.getElementById('moveContainer').checked;
+    const NewParentPageId = getParentPageID();
+    const NewParentPageIdInt = parseInt(NewParentPageId, 10);
+    const newName = document.getElementById('containerName').value;
+    const newColor = document.getElementById('containerColor').value;
+    const newContainerType = document.querySelector('input[name="containerType"]:checked').value
+    const id = currentEditId
+    return new Promise(async (resolve, reject) => {
+        const transaction = db.transaction(["containers"], "readwrite");
+        const store = transaction.objectStore("containers");
+        const request = await store.get(id);
+        const currentParentPageId = getParentPageID();
+
+        request.onsuccess = () => {
+            const data = request.result;
+            // Update container properties
+            data.name = newName;
+            data.color = newColor;
+            data.type = newContainerType;
+            data.parentPageId = NewParentPageIdInt;
+            console.log('check?, pageID', moveChecked, selectedParentPageIdInt);
+            if (moveChecked && selectedParentPageIdInt || moveChecked && selectedParentPageIdInt===0) {
+                data.parentPageId = selectedParentPageIdInt;
+                console.log('entered');
+            }
+
+            const updateRequest = store.put(data);
+            updateRequest.onsuccess = () => {
+                console.log("Container updated successfully:", data);
+                hideContainerPopup();
+                displayContainers(currentParentPageId);
+                resolve();
+            };
+            updateRequest.onerror = (event) => {
+                console.error("Error updating container:", event.target.errorCode);
+                reject(event.target.errorCode);
+            };
+        };
+
+        request.onerror = (event) => {
+            console.error("Error retrieving container:", event.target.errorCode);
+            reject(event.target.errorCode);
+        };
+    });
+}
+
+// Show the popup form, optionally in edit mode
+function showPagePopup(containerId, isEdit = false, page = {}) {
+    editMode = isEdit;
+    console.log('editMode:', editMode);
+    console.log('isEdit::', isEdit);
+    console.log('containerID:', containerId);
+    console.log('page:', page);
+    currentEditId = page.id || null;
+    currentContainerId = containerId; // Set the current container ID
+
+    // Set form title and button text based on mode
+    document.getElementById('pagePopupTitle').textContent = editMode ? 'Edit Page' : 'Add a New Page';
+    document.getElementById('pagePopupButton').textContent = editMode ? 'Save Changes' : 'Add Page';
+
+    // Pre-fill form fields if in edit mode
+    document.getElementById('pageName').value = editMode ? page.name : '';
+    document.getElementById('pageColor').value = editMode ? page.color || '#65a9d7' : '#65a9d7';
+    document.getElementById('pageComment').value = editMode ? page.comment || '' : '';
+
+    document.getElementById('pagePopupForm').style.display = 'block';
+    document.getElementById('pagePopupOverlay').style.display = 'block';
+}
+
+function hidePagePopup() {
+    document.getElementById('pagePopupForm').style.display = 'none';
+    document.getElementById('pagePopupOverlay').style.display = 'none';
+    editMode = false;
+    currentEditId = null;
+}
+
+// Save the link (either adding or editing)
+async function savePage() {
+    const name = document.getElementById('pageName').value;
+    const color = document.getElementById('pageColor').value;
+    const comment = document.getElementById('pageComment').value; // Optional comment field
+    const fileInput = document.getElementById('pageBackgroundImageUpload'); // File input for local image upload
+    const newFile = fileInput.files[0]; // Get the selected file
+    let fileBlob;
+    if (newFile) {
+        const blob = await newFile.arrayBuffer(); // Convert file to Blob
+        fileBlob = new Blob([blob], { type: newFile.type });
+    }
+    if (name) { // Check mandatory field
+        let order = 0;
+        if (!editMode) {
+            // Get the highest current order value if adding a new bookmark
+            const pages = await getPagesByContainer(currentContainerId);
+            order = pages.length > 0 ? Math.max(...pages.map(b => b.order)) + 1 : 0;
+        }
+        console.log("Updating page with values:", {
+            id: currentEditId,
+            name,
+            color,
+            comment,
+            order,
+            currentContainerId,
+        });
+
+        if (editMode && currentEditId !== null) {
+            // Edit existing bookmark
+            await updatePage(currentEditId, name, color, comment, order, currentContainerId, image = fileBlob);
+        } else {
+            // Add new bookmark with calculated order and container ID
+            const newId = Date.now();
+            await addPage(newId, name, color, comment, order, currentContainerId, image = fileBlob);
+        }
+
+        displayPages(currentContainerId); // Refresh the displayed list for the specific container
+        hidePagePopup(); // Close the popup
+    }
+}
+
+function getAllPages() {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["pages"], "readonly");
+        const store = transaction.objectStore("pages");
+        const request = store.getAll();
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = (event) => reject(event.target.errorCode);
+    });
+}
+
+
+function updateImportedHomeParentPageId(importData, newHomePageId) {
+    for (const storeName of Object.keys(importData)) {
+        if (storeName === "containers" || storeName === "pages") {
+            for (const item of importData[storeName]) {
+                if (item.parentPageId === 0) {
+                    item.parentPageId = newHomePageId; // Update parentPageId
+                }
+                if (item.id === 0){
+                    item.id = newHomePageId;
+                }
+            }
+        }
+    }
+}
+
+
+async function ensureImportContainer() {
+    const containers = await getContainersByParentPageId(0); // Home containers
+    let importContainer = containers.find((c) => c.name === "Import" && c.type === "pages");
+
+    if (!importContainer) {
+        const newContainerId = Date.now();
+        importContainer = { id: newContainerId, name: "Import", parentPageId: 0, type: "pages", color: "#FFD700", order: 0 };
+        await addFullContainerToDB(newContainerId, importContainer.name, importContainer.parentPageId, importContainer.type, importContainer.color, importContainer.order);
+        console.log('Added Container:', importContainer)
+    }
+
+    return importContainer;
+}
+
+async function createNewPageInImportContainer(containerId, dbName, homePageImage) {
+    const newPageId = Date.now();
+    const newPageName = `Imported: ${dbName.replace('.json', '')}`;
+    const pageColor = "#87CEFA"; // Default color for imported pages
+    console.log('newpageid:', newPageId)
+    await addPage(newPageId, newPageName, pageColor, "Imported database content", 0, containerId, homePageImage);
+    return newPageId;
+}
+
+</script>
+
+</body>
+</html>
